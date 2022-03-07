@@ -1,0 +1,25 @@
+
+#loginInfo
+{
+    
+    width: 300px;
+ 
+    height: 250px;
+    border: 2px solid lightblue;
+   margin: auto;
+   box-shadow: 10px 10px 5px 5px lightblue;
+
+    
+
+}
+#loginInfo>input{
+    margin-top: 20px;
+    width: 250px;
+    height: 20px;
+    margin-left: 20px;
+  
+  
+}
+h1{
+    margin-left: 100px;
+}
