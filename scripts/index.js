@@ -143,80 +143,189 @@ var movieData = [
     }
 
 
+
 ]
-var movies = document.querySelector("#movies");
-var moviesArr = [];
-movieData.map(function (ele, index, arr) {
-    var box = document.createElement("div");
-    var img = document.createElement("img");
-    img.src = ele.url;
+var x = displayDataMain()
+console.log();
 
-    var name = document.createElement("h2")
-    name.textContent = ele.name;
+function displayDataMain()
+{
+    var movies = document.querySelector("#movies");
+    var moviesArr = [];
+    movieData.map(function (ele, index, arr) {
+        var box = document.createElement("div");
+        box.setAttribute("id","box")
+        var img = document.createElement("img");
+        //img.setAttribute("id", "movieImg")
+        img.src = ele.url;
+    
+        var name = document.createElement("h2")
+        name.textContent = ele.name;
+        //name.setAttribute("id","movieName")
+    
+        var p = document.createElement("p")
+        p.textContent = ele.info;
+       // p.setAttribute("id","textContent" )
+    
+        var flexDiv = document.createElement("div")
+        //console.log(flexDiv);
+        flexDiv.setAttribute("id", "flexDiv")
+    
+        var ret = document.createElement("h4")
+        ret.textContent = ele.ret;
+       // ret.setAttribute("id","ret")
+    
+        var time = document.createElement("h4");
+        time.textContent = ele.time;
+       // time.setAttribute("id","time")
+    
+    
+        flexDiv.append(time, ret)
+        box.append(img, p, name, flexDiv)
+        movies.append(box);
+        moviesArr.push(ele)
+        //console.log(ele)
+        //localStorage.setItem("movies", JSON.stringify(moviesArr))
+    });
+    
+    }
 
-    var p = document.createElement("p")
-    p.textContent = ele.info;
-    var flexDiv = document.createElement("div")
-    //console.log(flexDiv);
-    flexDiv.setAttribute("id", "flexDiv")
+////No sort btn works
 
-    var ret = document.createElement("h4")
-    ret.textContent = ele.ret;
+// document.querySelector("#sort-no").addEventListener("click", sortNO);
+// function sortNO()
+// {
+//     const empty = document.getElementById("movies");
+//     empty.innerHTML = "";
+//     console.log(displayDataMain())
+// }
 
-    var time = document.createElement("h4");
-    time.textContent = ele.time;
-
-
-    flexDiv.append(time, ret)
-    box.append(img, p, name, flexDiv)
-    movies.append(box);
-    moviesArr.push(ele)
-    //console.log(ele)
-    localStorage.setItem("movies", JSON.stringify(moviesArr))
-});
 
 
 
 ////////////////////////sorting////// we are having two function ascending sort and descending sort
-var ArrRet = []
-var ArrId = [];
-var obj = {}
-movieData.map(function (ele, index, arr) {
-    ArrRet.push(ele.ret)
-    ArrId.push(ele.id)
-
-
-});
-
-//ArrRet.sort()
-console.log(ArrRet);
-//ArrId.sort()
-console.log(ArrId);
-for (let i = 0; i < ArrRet.length; i++) {
-    if (obj[ArrId[i]] == undefined) {
-        obj[ArrId[i]] = ArrRet[i]
-    }
-}
-console.log(obj)
-
-for(var key in obj)
-{
-    if(obj[key]==1)
-    {
-
-    }
-}
 
 
 ///Ascedning sort
-//document.querySelector("#sort-lh").addEventListener("click", AscendingSort)
+//var sortData = document.querySelector("#movies");
+document.querySelector("#sort-lh").addEventListener("click", AscendingSort);
+function AscendingSort()
+{
+    document.querySelector("#movies").append(" ")
+    movieData = movieData.sort(function(a,b)
+    {  
+        return Number(a.ret) - Number(b.ret)
+    });
+    let empty =document.getElementById("movies");
+    empty.innerHTML = "";
+    AscendingDisplay()
+}
 
 
 
+
+function AscendingDisplay ()
+{
+    localStorage.setItem("AscendingSort", JSON.stringify(movieData));
+    var AscendingSortArr = JSON.parse(localStorage.getItem("AscendingSort"));
+    
+     AscendingSortArr .map(function (ele, index, arr) {
+       var box = document.createElement("div");
+        box.setAttribute("id","box")
+        var img = document.createElement("img");
+       // img.setAttribute("id", "movieImg")
+        img.src = ele.url;
+    
+        var name = document.createElement("h2")
+        name.textContent = ele.name;
+        name.setAttribute("id","movieName")
+    
+        var p = document.createElement("p")
+        p.textContent = ele.info;
+        //p.setAttribute("id","textContent" )
+    
+        var flexDiv = document.createElement("div")
+        //console.log(flexDiv);
+        flexDiv.setAttribute("id", "flexDiv")
+    
+        var ret = document.createElement("h4")
+        ret.textContent = ele.ret;
+       // ret.setAttribute("id","ret")
+    
+        var time = document.createElement("h4");
+        time.textContent = ele.time;
+       // time.setAttribute("id","time")
+    
+    
+        flexDiv.append(time, ret)
+        box.append(img, p, name, flexDiv)
+        movies.append(box);
+      
+    });
+
+}
 
 
 
 
 //Descending sort
 
+document.querySelector("#sort-hl").addEventListener("click", DescendingSort)
+function DescendingSort()
+{
+    movieData = movieData.sort(function(a,b)
+    {  
+        return Number(b.ret)- Number(a.ret)
+    })
+    // localStorage.setItem("DescendingSort", JSON.stringify(movieData));
 
+ const empty =document.getElementById("movies");
+ empty.innerHTML = "";
+   
+     DescendingDisplay()
+}
+
+////////////////get Ascending data and appnding//
+
+function DescendingDisplay ()
+{
+    localStorage.setItem("DescendingSort", JSON.stringify(movieData));
+    var DescendingSortArr = JSON.parse(localStorage.getItem("DescendingSort"));
+    
+    DescendingSortArr.map(function (ele, index, arr) {
+       var box = document.createElement("div");
+        box.setAttribute("id","box")
+        var img = document.createElement("img");
+       // img.setAttribute("id", "movieImg")
+        img.src = ele.url;
+    
+        var name = document.createElement("h2")
+        name.textContent = ele.name;
+        name.setAttribute("id","movieName")
+    
+        var p = document.createElement("p")
+        p.textContent = ele.info;
+        //p.setAttribute("id","textContent" )
+    
+        var flexDiv = document.createElement("div")
+        //console.log(flexDiv);
+        flexDiv.setAttribute("id", "flexDiv")
+    
+        var ret = document.createElement("h4")
+        ret.textContent = ele.ret;
+       // ret.setAttribute("id","ret")
+    
+        var time = document.createElement("h4");
+        time.textContent = ele.time;
+       // time.setAttribute("id","time")
+    
+    
+        flexDiv.append(time, ret)
+        box.append(img, p, name, flexDiv)
+        movies.append(box);
+      
+    });
+
+}
+ 
+ 
